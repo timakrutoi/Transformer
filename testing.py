@@ -1,3 +1,4 @@
+import tiktoken
 import torch
 import torch.nn.functional as F
 
@@ -31,8 +32,8 @@ if __name__ == '__main__':
     cp = torch.load(a.model_path)
     params = cp['params']
 
-    tokenizer = Tokenizer()
-    vocab_size = tokenizer.size
+    tokenizer = tiktoken.get_encoding('gpt2')
+    vocab_size = tokenizer.n_vocab
 
     model = Transformer(vocab_size, params.block_size, params.num_emb, params.heads_num, params.block_num)
     model.load_state_dict(cp['model_state_dict'])
